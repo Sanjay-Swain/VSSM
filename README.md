@@ -13,6 +13,10 @@ any fancy interface.
 >*Initial development will be over when all inicial 
 feauters are implemented*
 
+Note:
+
+    Me, the creator of this repository is just a computation student who would like to help his family in their bussiness while learning more general programming skills.
+    I dont have advanced programming skills or a deep database/bussiness knowledge, so if you se me doing something wrong or outright horrific, just tell me, i'll be glad to hear anything to improve.
 
 ## Initial Features
 
@@ -21,7 +25,7 @@ feauters are implemented*
     -   basic info like current debt
 
 -   **Client detailed info**
-    -   Client purchases info
+    -   Client purchases History and info
     -   on a purchase by purchase basis
 
     -   debt info
@@ -52,9 +56,9 @@ feauters are implemented*
          -   Batch adding/discarding
 
 -   **Storage**
-    -   All files stored on a .zip folder
+    -   All files stored on a .zip folder (refered as archive)
         -  Including any configuration files
-        -  Each file will be an inventory product, client, or configuration file, stored on their specific folders inside the .zip
+        -  Each file will be an inventory product, client or configuration file, stored on their specific folders inside the .zip
     -   Optional encryption (no guarantees)
     -   (optional) extra parity checks to ensure data integrity (on a file per file basis)
- 
+    -   all data will be saved in xml format, trying to keep things simple
