@@ -1,7 +1,7 @@
 # CFSM
 *Client Based Sells Manager*
 
-####*This program for now its in a pre-working state, so its really not ready to use in a regular basis*
+#### *This program for now its in a pre-working state, so its really not ready to use in a regular basis*
 
 CFSM aims to help sellers keep a control of the sells 
 by providing a client driven classification of their sells, 
@@ -14,7 +14,7 @@ any fancy interface.
 feauters are implemented*
 
 
-##Initial Features
+## Initial Features
 
 -   **Client list**
     -   Clients names, and optional information.
