@@ -54,7 +54,7 @@ feauters are implemented*
 -   **Storage**
     -   All files stored on a .zip folder
         -  Including any configuration files
-        -  Each file will be an inventory element, or client os their specific folders
+        -  Each file will be an inventory product, client, or configuration file, stored on their specific folders inside the .zip
     -   Optional encryption (no guarantees)
     -   (optional) extra parity checks to ensure data integrity (on a file per file basis)
  
