@@ -66,3 +66,17 @@ access when reusing them, like creating a new product or client.
 
 it may hold other temporal information like the name and ID of all clients 
 for speeding up search.
+
+### `archive handler.py` (util)
+all the code necesary to store, write, and manage the archive
+
+class `Filehandler` basically implements non overwritting writting
+class `ArchiveHandler` subclass of `FileHandler` initialises a structure 
+in RAM to keep track of where each file starts and ends within the archive 
+and updating that structure when changes are made also administrating the 
+cache but this function may be implemented in a separate class if complexity 
+arises
+
+### `Templates.py` (util)
+has all predefined structures used by other code, right now it has a queue, and
+basic product/client stuffable structs

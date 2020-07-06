@@ -1,7 +1,17 @@
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def push(self, item):
+        self.queue.append(item)
+
+    def pop(self):
+        return self.queue.pop(0)
+
+
 class MetadataAble:
 
-    def __init__(self,name,**metadata):
-        self.name = name
+    def __init__(self, **metadata):
         self.metadata = metadata
 
     def edit_metadata(self, key, value):
@@ -18,14 +28,12 @@ class MetadataAble:
 
 class BatchProduct(MetadataAble):
 
-    def __init__(self, name, bathcids, **metadata):
-        super().__init__(name, **metadata)
-        self.batches = bathcids
+    def add_batch(self, batchname, **metadata):
+        self.metadata += {batchname: metadata}
 
+    def remove_batch(self, batchname):
+        self.metadata.pop(batchname)
 
-    def add_batch(self, btchid, **metadata):
-        self.batches.append()
-        self.metadata += metadata
 
 class StockProduct(MetadataAble):
     pass
