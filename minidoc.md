@@ -51,7 +51,7 @@ of the product.
 
 #### 3. Configuration file
 currently not in use, but there will be only one of these type of 
-file per archive. its job is to hold any posible customisation CFSM 
+file per archive. its job is to hold any posible customisation CBSM 
 may allow in the future 
 
 #### 4. Other important

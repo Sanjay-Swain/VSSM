@@ -1,9 +1,9 @@
-# CFSM
+# CBSM
 *Client Based Sells Manager*
 
 #### *This program for now its in a pre-working state, its really not ready to use in a regular manner*
 
-CFSM aims to help sellers keep a control of the sells 
+CBSM aims to help sellers keep a control of the sells 
 by providing a client driven classification of their sells, 
 some basic inventory control and summarys of data.
 
@@ -57,7 +57,7 @@ feauters are implemented*
          -   Batch adding/discarding
 
 -   **Storage**
-    -   All files stored on a .cfsm file (refered as the 
+    -   All files stored on a .cbsm file (refered as the 
         archive)
         -   Including any configuration files
         -   Each file will be an inventory product, client 
