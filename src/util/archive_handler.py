@@ -6,6 +6,7 @@ on this file, all elements necessary to deal with .CBSM archives are handled
 class FileHandler:
 
     def __init__(self, archive):
+        self.path = archive
         self.file = open(archive, "w+")
         self.DefaultRewriteChunkSize = 1024
         self.filesize = self.file.seek(0, 2)
@@ -70,7 +71,7 @@ class FileHandler:
 
 class ArchiveHandler(FileHandler):
 
-    def __init__(self, archive):
+    def __init__(self, archive="./archive.cbsm"):
         super().__init__(archive)
         self.references = {}
         self.find_cache()
@@ -79,14 +80,20 @@ class ArchiveHandler(FileHandler):
         # TODO finds cache on archive and loads all references to memory for quick file manipulation
         pass
 
-    def build_cache(self):
+    def build_reference_cache(self):
         # TODO in case no cache is present on archive
         pass
 
     def update_offsetted_references(self, start, offset):
         for x in self.references.keys():
             if self.references[x][0] > start:
-                self.references[x][0] = self.references[x][0] + offset
+                self.references[x][0] = self.references[x] + offset
+
+    def add_reference(self, idden, place):
+        self.references += {idden: place}
+
+    def remove_reference(self, iden):
+        self.references.pop(iden)
 
     def write_at(self, place: int, content: str):
         super().write_at(place, content)
@@ -99,3 +106,10 @@ class ArchiveHandler(FileHandler):
     def errase_at(self, place, quantity):
         super().errase_at(place, quantity)
         self.update_offsetted_references(place, -quantity)
+
+    def load_file(self,start: int, end: int):
+        #TODO reads file inside archive, and returns the readed file on a str,
+        pass
+
+    def save_file(self,start: int, content):
+        #TODO compare file to save with file on disk, and write to it
