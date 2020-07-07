@@ -1,5 +1,5 @@
 """
-on this file, all elements necessary to deal with .CBSM archives are handled
+on this file, all elements necessary to deal with .VSSM archives are handled
 """
 
 
@@ -71,7 +71,7 @@ class FileHandler:
 
 class ArchiveHandler(FileHandler):
 
-    def __init__(self, archive="./archive.cbsm"):
+    def __init__(self, archive="./archive.VSSM"):
         super().__init__(archive)
         self.references = {}
         self.find_cache()

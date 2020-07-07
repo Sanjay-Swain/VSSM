@@ -50,7 +50,7 @@ of the product.
 
 #### 3. Configuration file
 Currently not in use, but there will be only one of these type of 
-file per archive. its job is to hold any posible customisation CBSM 
+file per archive. its job is to hold any posible customisation VSSM 
 may allow in the future 
 
 #### 4. Other important
