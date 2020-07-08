@@ -1,15 +1,17 @@
 # VSSM
-*Very Simple Sells Manager* 
+*Very Simple Sales Manager* 
 *(Better Name can be proposed)*
 
 #### *This program for now its in a pre-working state, its really not ready to use in a regular manner*
 
-VSSM aims to help sellers keep a control of the sells 
-by providing a client driven classification of their sells, 
-some basic inventory control and summarys of data.
+VSSM aims to help with keeping a control of the sales
+by providing a client driven classification of data, 
+somebasic inventory control and summarys of data.
 
 For its initial development only cli will be used, without 
-any fancy interface. 
+any fancy interface, after this a "front end" will be developed 
+to use on cellphones and computers alike, adding support for connecting to "backend"
+either to an internet server or to a local server, as well as adding more features.
 
 *Initial development will be over when all inicial 
 feauters are implemented*
