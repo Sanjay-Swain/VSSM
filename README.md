@@ -1,5 +1,6 @@
 # VSSM
-*Very Simple Sells Manager*
+*Very Simple Sells Manager* 
+*(Better Name can be proposed)*
 
 #### *This program for now its in a pre-working state, its really not ready to use in a regular manner*
 
