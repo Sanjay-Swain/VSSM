@@ -19,13 +19,11 @@ class FileHandler:
 
     def write_at(self, place: int, content: str):
         # TODO fix for writes larger than DefaultRewriteChunkSize
-        # for testing only, default must be\
-        # something like 8192\
-        # or fs page size multiplied various times
-        chunksize = 1
+        chunksize = 1  # default must be 8192 or bigger multiple of 4096
 
         max = self.file.seek(0, 2)
-        total_swaps = (max - place + 1) // chunksize
+        work_size = max - place
+        total_swaps = (work_size + (chunksize - (place%chunksize))) // chunksize #calculate padding and then doing division
 
         nwritchnks = (len(content) + 1 // chunksize)
         ttalcnks = nwritchnks
@@ -35,7 +33,9 @@ class FileHandler:
         temp1 = self.file.read(chunksize)
         temp2 = self.file.read(chunksize)
         self.offset_seek(-chunksize)
+        finished = False
         while finished is False:
+
             while swaps <= total_swaps :
                 self.file.write(temp1)
                 temp1 = self.file.read(chunksize)
