@@ -7,8 +7,48 @@ class FileHandler:
 
     def __init__(self, archive: str):
         self.path = archive
-        self.file = open(archive, "w+")
+        self.file = open(archive, "r+")
         self.filesize = self.file.seek(0, 2)
+
+    def offset_data(self, place, offset, chunksize=8192):
+        if offset > chunksize:
+            return "Error: offset bigger than chunksize"
+
+        size = self.file.seek(0, 2) - place
+        if size < chunksize*2:
+            padding = ((chunksize*2) - (size % (chunksize*2))) % (chunksize*2)
+            padded = [True, padding]
+            while 0 < padding:
+                self.file.write(" ")
+                padding -= 1
+        else:
+            padded = [False]
+
+        self.file.seek(place)
+        temp = [None, None]
+        temp[0] = self.file.read(chunksize)
+        temp[1] = self.file.read(chunksize)
+        next_temp = self.file.tell()
+        self.file.seek(place - offset)
+        pointer = self.file.tell()
+        print([self.file.tell(), pointer])
+        lol = False
+        while True:
+            if (temp[0] != "\x00") and (temp[0] != ""):  # idk why, but i had to apparently
+                self.file.write(temp[0])
+                self.file.flush()
+                self.file.seek(next_temp)
+                temp[0] = self.file.read(4)
+                next_temp += 4
+                pointer += 4
+                self.file.seek(pointer)
+                temp[0], temp[1] = temp[1], temp[0]
+            else:
+                break
+
+        if padded[0] is True:
+            size = self.file.seek(0, 2)
+            self.file.truncate(size - padded[1])
 
     def offset_seek(self, offset: int):
         self.file.seek(self.file.tell() + offset)
@@ -19,31 +59,7 @@ class FileHandler:
 
     def write_at(self, place: int, content: str):
         # TODO fix for writes larger than DefaultRewriteChunkSize
-        # for testing only, default must be\
-        # something like 8192\
-        # or fs page size multiplied various times
-        chunksize = 1
-
-        max = self.file.seek(0, 2)
-        total_swaps = (max - place + 1) // chunksize
-
-        nwritchnks = (len(content) + 1 // chunksize)
-        ttalcnks = nwritchnks
-        self.file.seek(place)
-        swaps = 0
-
-        temp1 = self.file.read(chunksize)
-        temp2 = self.file.read(chunksize)
-        self.offset_seek(-chunksize)
-        while finished is False:
-            while swaps <= total_swaps :
-                self.file.write(temp1)
-                temp1 = self.file.read(chunksize)
-                self.offset_seek(-chunksize)
-                self.file.write(temp2)
-                temp2 = self.file.read(chunksize)
-                swaps += 1
-
+        pass
 
     def overwrite_at(self, place: int, content: str):
         self.file.seek(place)
