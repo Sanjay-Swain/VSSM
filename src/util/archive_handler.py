@@ -7,10 +7,10 @@ class FileHandler:
 
     def __init__(self, archive: str):
         self.path = archive
-        self.file = open(archive, "r+")
+        self.file = open(archive, "b+")
         self.filesize = self.file.seek(0, 2)
 
-    def offset_data(self, place, offset, chunksize=8192):
+    def offset_at(self, place, offset, chunksize=8192):
         if offset > chunksize:
             return "Error: offset bigger than chunksize"
 
@@ -19,7 +19,7 @@ class FileHandler:
             padding = ((chunksize*2) - (size % (chunksize*2))) % (chunksize*2)
             padded = [True, padding]
             while 0 < padding:
-                self.file.write(" ")
+                self.file.write(" ".encode())
                 padding -= 1
         else:
             padded = [False]
@@ -32,9 +32,8 @@ class FileHandler:
         self.file.seek(place - offset)
         pointer = self.file.tell()
         print([self.file.tell(), pointer])
-        lol = False
         while True:
-            if (temp[0] != "\x00") and (temp[0] != ""):  # idk why, but i had to apparently
+            if (temp[0] != "\x00") and (temp[0] != ""):  # fileidk why, but i had to apparently
                 self.file.write(temp[0])
                 self.file.flush()
                 self.file.seek(next_temp)
@@ -50,95 +49,110 @@ class FileHandler:
             size = self.file.seek(0, 2)
             self.file.truncate(size - padded[1])
 
-    def offset_seek(self, offset: int):
-        self.file.seek(self.file.tell() + offset)
-
     def read_at(self, place: int, size: int):
         self.file.seek(place)
         return self.file.read(size)
 
-    def write_at(self, place: int, content: str):
-        # TODO fix for writes larger than DefaultRewriteChunkSize
-        pass
-
-    def overwrite_at(self, place: int, content: str):
+    def write_at(self, place: int, content: bytes):
         self.file.seek(place)
         self.file.write(content)
-
-    def errase_at(self, place: int, quantity: int):
-        pass
+        a = self.file.read()
 
 
 class ArchiveHandler(FileHandler):
 
     def __init__(self, archive):
+        # initialise
         super().__init__(archive)
         self.reflist = {}
-        self.find_cache()
+        # load FS data
+        self.chunksize = self.from_bytes(self.file.read(8))
+        self.cache_start = self.from_bytes(self.file.read(8))
+        self.cache_reserved = self.from_bytes(self.file.read(8))
+        self.current_size = self.from_bytes(self.file.read(8))
+        if self.cache_start != 0xFFFFFFFF:
+            self.cache_present = True
+            self.reflist += {1: [self.cache_start]}
+        else:
+            self.cache_present = False
 
-    def find_cache(self):
-        # TODO finds cache on archive and loads all references to memory for quick file manipulation
+    # Loading and constructing cache
+
+    def load_cache(self):
+        temp = self.load_file(1)
+
+        if self.from_bytes(temp[:8]) == 1:
+            for wordcount in range(self.from_bytes(temp[8:16])):
+                self.reflist[1].append(self.from_bytes(temp[wordcount*8:(wordcount+1)*8]))
+            #rereads cache file after reading cache file parts
+            temp = self.load_file(1)
+            wordcount = 0
+            while True:
+                word = self.from_bytes(temp[wordcount * 8:(wordcount + 1) * 8])
+                if  word == 0:
+                    break
+
+                fileid = word
+                wordcount += 1
+                word = self.from_bytes(temp[wordcount * 8:(wordcount + 1) * 8])
+                if not(word in self.reflist):
+                    self.reflist += {word: []}
+
+                for wordcount in range(word):
+                    if word in self.reflist[fileid]:
+                        wordcount += 1
+                    else:
+                        self.reflist[fileid].append(word)
+                        wordcount += 1
+        else:
+            self.build_cache()
+
+    def build_cache(self):
+        for i in range(1):
+            pass
+
+    def update_file_cache(self):
         pass
 
-    def build_reference_cache(self):
-        # TODO in case no cache is present on archive
-        pass
+    # Managing RAM references
+    def add_reference(self, fileid: int, index: list):
+        self.reflist += {fileid: index}
 
-    def update_offsetted_references(self, start, offset):
-        for x in self.reflist.keys():
-            if self.reflist[x][0] > start:
-                self.reflist[x][0] = self.reflist[x][0] + offset
-                self.reflist[x][1] = self.reflist[x][1] + offset
+    def remove_reference(self, fileid: int):
+        self.reflist.pop(fileid)
 
-    def add_reference(self, iden, place: list):
-        self.reflist += {iden: place}
-
-    def remove_reference(self, iden):
-        self.reflist.pop(iden)
-
-    def edit_reference(self, iden, start=None, end=None):
+    def edit_reference(self, fileid: int, start=None, end=None):
         if start is not None:
-            self.reflist[iden][0] = start
+            self.reflist[fileid][0] = start
 
         if end is not None:
-            self.reflist[iden][1] = end
+            self.reflist[fileid][1] = end
 
-    def rename_reference(self, iden, newiden):
-        self.reflist[newiden] = self.reflist.pop(iden)
+    def rename_reference(self, fileid: int, newfileiden):
+        self.reflist[newfileiden] = self.reflist.pop(fileid)
 
-    def write_at(self, place: int, content: str):
-        super().write_at(place, content)
-        self.update_offsetted_references(place, len(content))
+    # File Writing and reading
+    def load_file(self, fileid):
+        file = bytearray
+        for ref in self.reflist[fileid]:
+            file.append((bytearray(self.read_at(self.reflist[fileid][ref], self.chunksize))))
+        return file
 
-    def overwrite_at(self, place, content):
-        super().overwrite_at(place, content)
-        self.update_offsetted_references(place, len(content))
+    def write_file(self, fileid, content):
+        pass
 
-    def errase_at(self, place, quantity):
-        super().errase_at(place, quantity)
-        self.update_offsetted_references(place, -quantity)
+    def truncate_file(self, fileid, size):
+        pass
 
-    def load_file(self, refs: list):
-        return self.read_at(refs[0], refs[0] - refs[1])
+    def delete_file(self, fileid):
+        pass
 
-    def save_file(self, refs, newfile: str):
-        newlength = len(newfile)
-        oldlength = refs[1] - refs[0]
+    # basic operation corrected with chunksize
+    def read_at(self, place: int, size: int):
+        return super().read_at(place*self.chunksize, size)
 
-        if newlength <= oldlength:
-            self.overwrite_at(refs[0], newfile)
-            diff = oldlength - len(newfile)
-            self.errase_at(refs[0] + newlength + 1, diff)  # truncates file
+    def write_at(self, place: int, content: bytes):
+        return super().write_at(place*self.chunksize, content)
 
-        if newlength > oldlength:
-            self.overwrite_at(refs[0], newfile[:oldlength])
-            self.write_at(oldlength, newfile[oldlength:])
-
-        self.update_offsetted_references(refs[0], newlength - oldlength)
-
-    def new_file(self, iden):
-        lastref = 0
-        for x in self.reflist.keys():
-            if lastref < self.reflist[x][1]:
-                lastref = self.reflist[x][1]
-        self.add_reference(iden, [lastref + 1, lastref + 1])
+    def from_bytes(self,bytes: bytes,signed=False):
+        return int.from_bytes(bytes,"big",signed=signed)
