@@ -9,7 +9,7 @@ class Queue:
         return self.queue.pop(0)
 
 
-class MetadataAble:
+class DataContainer:
 
     def __init__(self, **metadata):
         self.metadata = metadata
@@ -26,7 +26,7 @@ class MetadataAble:
             del self.metadata[x][key]
 
 
-class BatchProduct(MetadataAble):
+class Product(DataContainer):
 
     def add_batch(self, batchname, **metadata):
         self.metadata += {batchname: metadata}
@@ -34,10 +34,5 @@ class BatchProduct(MetadataAble):
     def remove_batch(self, batchname):
         self.metadata.pop(batchname)
 
-
-class StockProduct(MetadataAble):
-    pass
-
-
-class Client(MetadataAble):
+class Client(DataContainer):
     pass
