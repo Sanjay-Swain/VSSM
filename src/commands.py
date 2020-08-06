@@ -16,11 +16,10 @@ commands:
     
     sell():           sells product to given client, also writing to history.
     
-    save():           writes all loaded data to storage.
+    save():           writes all loaded data to archive.
     
     open_archive():   if no archive is found at startup, this command can be used to open one manually, 
-                      other open archives will be saved and closed.
-                      
+                      other open archives will be saved and closed.  
           """)
 
 

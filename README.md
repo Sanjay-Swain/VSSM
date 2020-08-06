@@ -52,21 +52,23 @@ feauters are implemented*
     -   Product managing
     
      -   Price & stock properties
-         -   Can be batch 
          -   Optional metadata (ie expiration date)
              -   Independent batch metadata
     
          -   Price and stock change 
-         -   Batch adding/discarding
+         -   Batch adding/discarding 
 
 -   **Storage**
-    -   All files stored on a .VSSM file (refered as the 
+    -   All data will be stored on a .VSSM file (refered as the 
         archive)
-        -   Including any configuration files
-        -   Each file will be an inventory product, client 
+        -   any configuration
+        -   Each entry will be an inventory product, client 
             or configuration file, stored inside the archive
     -   Optional encryption (no guarantees)
     -   (optional) extra parity checks to ensure data 
-        integrity (on a file per file basis)
+        integrity
     -   all data will be saved in xml format, trying to 
         keep things simple
+
+## Other information
+ - [Discord](https://discord.gg/VJd6X7)
