@@ -1,3 +1,6 @@
+# This is already Deprecated it is going to be removed soon.
+
+
 class Queue:
     def __init__(self):
         self.queue = []
