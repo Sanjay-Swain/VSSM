@@ -14,39 +14,19 @@ thi is some sort of to do list, but a little more in detail.
 probably temporal name, used for starting the program and parsing the 
 comands entered.
 
-
-### `xml_handler.py` (util)
-Used to handle xml files from the archive.
-it can:
-Initiate template classes based on the contents of anmplate.
-- or
-
-Take a "stuffed" class and save its contents on a file
-
-### `xml structure`
-all xml start by their type, that can be:
-1. client
-2. product
-3. configuration file
-4. "other important"
-5. cache
 #### 1. client
-Starts with `<client>` and has all the metadata asociated with it.
+Starts with `<client id=x>` and has all the metadata asociated with it.
 
-Obligatory fields: `<name>,<ID>`
+Obligatory fields: `<name>`
 
 #### 2. Product
-Obligatory field: `<name>,<ID>`
-Products can be either `stock` or `batch` type products.
+Starts with `<product id=x>` and has all the metadata asociated with it.
+Obligatory field: `<name>,`
 
-- `stock` type just maintains a count of the product quantity
-sharing the metadata with all the stock.
 
-- `batch` types handles different *batches* of the same product, 
-with each *batch* having a separate product count and metadata, 
-though the same types of metadata are peresent on all the batches 
-of the product.
-
+- each product works with *batches* with each *batch* having a separate 
+product count and metadata, though the same types of metadata are peresent 
+on all the batches of the product.
 
 #### 3. Configuration file
 Currently not in use, but there will be only one of these type of 
@@ -59,22 +39,6 @@ This will other important information
 For now just the purchase history
 - Each entry on the purchase history must have the ID of buyer (0 == anonymous), 
 sell date, the ID of each product selled and the respective quantity.
-#### 5. Cache
-This file will hold metadata key names used in the past, for a quick 
-access when reusing them, like creating a new product or client.
-
-It may hold other temporal information like the name and ID of all clients 
-for speeding up search.
-
-### `archive handler.py` (util)
-All the code necesary to store, write, and manage the archive
-
-Class `Filehandler` basically implements non overwritting writting and "normal"
-errasing.
-
-Class `ArchiveHandler` subclass of `FileHandler` initialises a structure 
-in RAM to keep track of where each file starts and ends within the archive 
-and updating that structure when changes are made.
 
 ### `Templates.py` (util)
 has all predefined structures used by other code, right now it has a queue, and
