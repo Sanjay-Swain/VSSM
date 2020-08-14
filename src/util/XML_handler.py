@@ -67,9 +67,17 @@ class Client:
 		f.close()
 
 
+class Product(Client):
+	root = 'product'
+
+
+prod_obj = Product('product.xml')
 cli_obj = Client('client.xml')
 
 
 if __name__ == '__main__':
 	print("=====YOU ARE RUNNING THIS FILE DIRECTLY=====")
+	# cli_obj.create('test')
 	# cli_obj.remove('test')
+	# prod_obj.create('test')
+	# prod_obj.remove('test')
