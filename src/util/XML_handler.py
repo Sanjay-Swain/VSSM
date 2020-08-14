@@ -26,8 +26,8 @@ class Client:
 	def __init__(self, file):
 		self.file = file  # File name of the client xml.
 		try:
-			self.document = minidom.parse(file)		# minidom document object of client xml file.
-		except xml.parsers.expat.ExpatError:		# Exception handling in case the file is empty
+			self.document = minidom.parse(file)  # minidom document object of client xml file.
+		except xml.parsers.expat.ExpatError:  # Exception handling in case the file is empty
 			create_root(file, self.root)
 			self.document = minidom.parse(file)
 
@@ -52,22 +52,19 @@ class Client:
 		data_node.appendChild(name_node)
 		self.document.childNodes[-1].appendChild(data_node)
 
-		xml_str = formatter.format_string(self.document.toxml(encoding="UTF-8")).decode()
-		f = open(self.file, 'w+')
-		f.write(xml_str)
-		f.close()
-
 	def remove(self, client_name):
 		for data in self.document.getElementsByTagName('name'):
 			if data.firstChild.nodeValue == client_name:
 				parent = data.parentNode
 				parent.parentNode.removeChild(parent)
+
+	def save(self):  # This will write the changes to the file thereby making the changes permanent.
 		xml_str = formatter.format_string(self.document.toxml(encoding="UTF-8")).decode()
 		f = open(self.file, 'w+')
 		f.write(xml_str)
 		f.close()
 
-	def __str__(self):
+	def __str__(self):  # This will print the current status of the file in console.
 		xml_str = formatter.format_string(self.document.toxml(encoding="UTF-8")).decode()
 		return xml_str
 
@@ -79,7 +76,6 @@ class Product(Client):
 prod_obj = Product('product.xml')
 cli_obj = Client('client.xml')
 
-
 if __name__ == '__main__':
 	print("=====YOU ARE RUNNING THIS FILE DIRECTLY=====")
 	# cli_obj.create('test')
@@ -88,3 +84,5 @@ if __name__ == '__main__':
 	# prod_obj.remove('test')
 	# print(cli_obj)
 	# print(prod_obj)
+	# cli_obj.save()
+	# prod_obj.save()
