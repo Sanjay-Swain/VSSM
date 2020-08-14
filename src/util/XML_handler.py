@@ -5,6 +5,7 @@ import xmlformatter
 formatter = xmlformatter.Formatter()
 
 
+# This helps in creating root node for a xml file if for some reason the xml file contain unintended characters.
 def create_root(file: str, root: str):
 	xml_str = f"<{root}></{root}>"
 	f = open(file, 'w+')
@@ -12,7 +13,7 @@ def create_root(file: str, root: str):
 	f.close()
 
 
-def check_data(root_obj):  # This help in creating id for client.
+def check_data(root_obj):  # This help in creating id for client and product.
 	count = 0
 	for _ in root_obj.getElementsByTagName('data'):
 		count += 1
@@ -66,6 +67,10 @@ class Client:
 		f.write(xml_str)
 		f.close()
 
+	def __str__(self):
+		xml_str = formatter.format_string(self.document.toxml(encoding="UTF-8")).decode()
+		return xml_str
+
 
 class Product(Client):
 	root = 'product'
@@ -81,3 +86,5 @@ if __name__ == '__main__':
 	# cli_obj.remove('test')
 	# prod_obj.create('test')
 	# prod_obj.remove('test')
+	# print(cli_obj)
+	# print(prod_obj)
