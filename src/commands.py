@@ -1,6 +1,3 @@
-import util.Templates as Templates
-
-
 def _help():
     print("""
 commands:
@@ -10,7 +7,7 @@ commands:
     create_product(): creates new product
     
     remove_client():  removes client, also deletes all info form the archive and changing all history entres at his name 
-                      to anonymos
+                      to anonymous
                       
     remove_product(): removes product
     
@@ -22,7 +19,8 @@ commands:
                       other open archives will be saved and closed.  
           """)
 
-
+# This code in triple quote is going to be deleted (maybe) it has no use anymore.
+"""
 def create_client(name):
     client = Templates.Client(name=name)
     return client
@@ -36,3 +34,4 @@ def create_product(name):
 def sell(client, items, quantities,batch=0):
     pass
 
+"""

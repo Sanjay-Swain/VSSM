@@ -6,20 +6,22 @@
 
 VSSM aims to help with keeping a control of the sales
 by providing a client driven classification of data, 
-somebasic inventory control and summarys of data.
+some basic inventory control and summary of data.
 
 For its initial development only cli will be used, without 
 any fancy interface, after this a "front end" will be developed 
 to use on cellphones and computers alike, adding support for connecting to "backend"
 either to an internet server or to a local server, as well as adding more features.
 
-*Initial development will be over when all inicial 
-feauters are implemented*
+*Initial development will be over when all initial 
+features are implemented*
 
 >Note:
 >
->     Me, the creator of this repository is just a computation student who would like to help his family in their bussiness while learning more general programming skills.
->     I dont have advanced programming skills or a deep database/bussiness knowledge, so if you se me doing something wrong or outright horrific, just tell me, i'll be glad to hear anything to improve.
+>     Me, the creator of this repository is just a computation student who would like to help his family in 
+>     their business while learning more general programming skills. I don't have advanced programming skills 
+>     or a deep database/business knowledge, so if you se me doing something wrong or outright horrific, just
+>     tell me, i'll be glad to hear anything to improve.
 ---
 ## Initial Features
 
@@ -59,7 +61,7 @@ feauters are implemented*
          -   Batch adding/discarding 
 
 -   **Storage**
-    -   All data will be stored on a .VSSM file (refered as the 
+    -   All data will be stored on a .VSSM file (referred as the 
         archive)
         -   any configuration
         -   Each entry will be an inventory product, client 
