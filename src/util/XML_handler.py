@@ -1,6 +1,7 @@
 from xml.dom import minidom
 import xml
 import xmlformatter
+import random
 
 formatter = xmlformatter.Formatter()
 
@@ -13,11 +14,11 @@ def create_root(file: str, root: str):
 	f.close()
 
 
-def check_data(root_obj):  # This help in creating id for client and product.
-	count = 0
-	for _ in root_obj.getElementsByTagName('data'):
-		count += 1
-	return count
+def create_id():
+	l = []
+	for a in range(4):
+		l.append(str(random.randint(1000, 9999)))
+	return '-'.join(l)
 
 
 class Client:
@@ -32,7 +33,7 @@ class Client:
 			self.document = minidom.parse(file)
 
 	def create(self, client_name):
-		id_val = check_data(self.document) + 1
+		id_val = create_id()
 		# Create <data /> node
 		data_node = self.document.createElement("data")
 
