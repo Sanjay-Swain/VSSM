@@ -3,8 +3,6 @@ import xml
 import xmlformatter
 import random
 
-formatter = xmlformatter.Formatter()
-
 
 # This helps in creating root node for a xml file if for some reason the xml file contain unintended characters.
 def create_root(file: str, root: str):
@@ -19,6 +17,44 @@ def create_id():
 	for a in range(4):
 		l.append(str(random.randint(1000, 9999)))
 	return '-'.join(l)
+
+
+def execute(func: list):
+	"""
+	:param func: This is a list containing [function, file, Name]
+	:return: depends upon the function.
+	"""
+	func_len = len(func)
+	if func_len > 0 and func[0] in commands:
+		if (func[0] in ["create", "remove"] and func_len < 3) or (func[0] in ["save", "preview"] and func_len < 2):
+			print("More information required to execute the given command")
+			print("Type help for commands")
+		elif func[0] == "create":
+			file = file_dict[func[1]]
+			file.create(func[2])
+		elif func[0] == "remove":
+			file = file_dict[func[1]]
+			file.remove(func[2])
+		elif func[0] == "save":
+			file = file_dict[func[1]]
+			file.save()
+		elif func[0] == "preview":
+			print(file_dict[func[1]])
+		elif func[0] == "help":
+			help()
+	else:
+		print("Invalid command")
+
+
+def help():
+	print("""
+	Note: The commands are not case sensitive
+	Commands:
+	create <client|product> <Name>
+	remove <client|product> <Name>
+	save
+	preview <client|product>
+	""")
 
 
 class Client:
@@ -74,11 +110,16 @@ class Product(Client):
 	root = 'product'
 
 
-prod_obj = Product('product.xml')
-cli_obj = Client('client.xml')
+prod_obj = Product('util\\product.xml')
+cli_obj = Client('util\\client.xml')
+formatter = xmlformatter.Formatter()
+commands = ["help", "create", "remove", "save", "preview", "exit"]
+file_dict = {"client":cli_obj, "product":prod_obj}
 
 if __name__ == '__main__':
 	print("=====YOU ARE RUNNING THIS FILE DIRECTLY=====")
+	prod_obj = Product('product.xml')
+	cli_obj = Client('client.xml')
 	# cli_obj.create('test')
 	# cli_obj.remove('test')
 	# prod_obj.create('test')
