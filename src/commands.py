@@ -1,37 +1,53 @@
-def _help():
-    print("""
-commands:
-    help: Displays all commands
-    create_client():  creates new client
-    
-    create_product(): creates new product
-    
-    remove_client():  removes client, also deletes all info form the archive and changing all history entres at his name 
-                      to anonymous
-                      
-    remove_product(): removes product
-    
-    sell():           sells product to given client, also writing to history.
-    
-    save():           writes all loaded data to archive.
-    
-    open_archive():   if no archive is found at startup, this command can be used to open one manually, 
-                      other open archives will be saved and closed.  
-          """)
-
-# This code in triple quote is going to be deleted (maybe) it has no use anymore.
-"""
-def create_client(name):
-    client = Templates.Client(name=name)
-    return client
+from util.XML_handler import *
 
 
-def create_product(name):
-    product = Templates.Product(name=name, batch_0={"stock": 0})
-    return product
+def help():
+	print("""
+	NOTE: The commands are not case sensitive
+	NOTE: For commands save, help and exit the trailing data will be ignored.
+	NOTE: ANd for create and remove commands the trailing data will be considered as a part of name.
+	Commands:
+		create <client|product> <Name>
+		remove <client|product> <Name>
+		save
+		preview <client|product>
+		help
+		exit
+		clear
+	""")
 
 
-def sell(client, items, quantities,batch=0):
-    pass
+def execute(func: list):
+	"""
+	:param func: This is a list containing [function, file, Name]
+	:return: depends upon the function.
+	"""
+	try:
+		func_len = len(func)
+		if func_len > 0 and func[0] in command_list:
+			if (func[0] in ["create", "remove"] and func_len < 3) or (func[0] in ["save", "preview"] and func_len < 2):
+				print("More information required to execute the given command")
+				print("Type help for more information")
+			elif func[0] == "create":
+				file = file_dict[func[1]]
+				file.create(func[2])
+			elif func[0] == "remove":
+				file = file_dict[func[1]]
+				file.remove(func[2])
+			elif func[0] == "save":
+				file = file_dict[func[1]]
+				file.save()
+			elif func[0] == "preview":
+				print(file_dict[func[1]])
+			elif func[0] == "help":
+				help()
+			elif func[0] == "clear":
+				print("\n"*50)
+		else:
+			print("Invalid command")
+	except KeyError:
+		print(f"Please chose between [client|product] {func[1]} is not valid.")
 
-"""
+
+command_list = ["help", "create", "remove", "save", "preview", "exit", "clear"]
+file_dict = {"client": cli_obj, "product": prod_obj}
