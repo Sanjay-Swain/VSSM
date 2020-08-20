@@ -3,9 +3,9 @@ import commands
 
 
 print("Welcome to VSSM v0.01")  # Removed some zeros : )
-print("type help for seeing available commands")
-print("Current version of program has almost no features to use.")
-print("For now this program maybe helpful for storing names of data.")
+print("type help to see available commands")
+print("Current version of program doesn't have much features to use.")
+print("For now this program maybe helpful for storing names of products|client.")
 
 running = True
 
