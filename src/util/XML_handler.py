@@ -28,7 +28,7 @@ def execute(func: list):
 	if func_len > 0 and func[0] in commands:
 		if (func[0] in ["create", "remove"] and func_len < 3) or (func[0] in ["save", "preview"] and func_len < 2):
 			print("More information required to execute the given command")
-			print("Type help for commands")
+			print("Type help for more information")
 		elif func[0] == "create":
 			file = file_dict[func[1]]
 			file.create(func[2])
@@ -48,12 +48,16 @@ def execute(func: list):
 
 def help():
 	print("""
-	Note: The commands are not case sensitive
+	NOTE: The commands are not case sensitive
+	NOTE: For commands save, help and exit the trailing data will be ignored.
+	NOTE: ANd for create and remove commands the trailing data will be considered as a part of name.
 	Commands:
 	create <client|product> <Name>
 	remove <client|product> <Name>
 	save
 	preview <client|product>
+	help
+	exit
 	""")
 
 
@@ -114,12 +118,13 @@ prod_obj = Product('util\\product.xml')
 cli_obj = Client('util\\client.xml')
 formatter = xmlformatter.Formatter()
 commands = ["help", "create", "remove", "save", "preview", "exit"]
-file_dict = {"client":cli_obj, "product":prod_obj}
+file_dict = {"client": cli_obj, "product": prod_obj}
 
 if __name__ == '__main__':
 	print("=====YOU ARE RUNNING THIS FILE DIRECTLY=====")
 	prod_obj = Product('product.xml')
 	cli_obj = Client('client.xml')
+	# Test Cases just remove the comments.
 	# cli_obj.create('test')
 	# cli_obj.remove('test')
 	# prod_obj.create('test')
