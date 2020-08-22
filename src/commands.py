@@ -30,10 +30,10 @@ def execute(func: list):
 				print("Type help for more information")
 			elif func[0] == "create":
 				file = file_dict[func[1]]
-				file.create(' '.join(func[2]))
+				file.create(' '.join(func[2:]))
 			elif func[0] == "remove":
 				file = file_dict[func[1]]
-				file.remove(' '.join(func[2]))
+				file.remove(' '.join(func[2:]))
 			elif func[0] == "save":
 				file = file_dict[func[1]]
 				file.save()
