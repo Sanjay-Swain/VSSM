@@ -1,8 +1,7 @@
 from xml.dom import minidom
 import xml
 import xmlformatter
-
-formatter = xmlformatter.Formatter()
+import random
 
 
 # This helps in creating root node for a xml file if for some reason the xml file contain unintended characters.
@@ -13,11 +12,11 @@ def create_root(file: str, root: str):
 	f.close()
 
 
-def check_data(root_obj):  # This help in creating id for client and product.
-	count = 0
-	for _ in root_obj.getElementsByTagName('data'):
-		count += 1
-	return count
+def create_id():
+	l = []
+	for a in range(4):
+		l.append(str(random.randint(1000, 9999)))
+	return '-'.join(l)
 
 
 class Client:
@@ -32,7 +31,7 @@ class Client:
 			self.document = minidom.parse(file)
 
 	def create(self, client_name):
-		id_val = check_data(self.document) + 1
+		id_val = create_id()
 		# Create <data /> node
 		data_node = self.document.createElement("data")
 
@@ -73,11 +72,15 @@ class Product(Client):
 	root = 'product'
 
 
-prod_obj = Product('product.xml')
-cli_obj = Client('client.xml')
+prod_obj = Product('util\\product.xml')
+cli_obj = Client('util\\client.xml')
+formatter = xmlformatter.Formatter()
 
 if __name__ == '__main__':
 	print("=====YOU ARE RUNNING THIS FILE DIRECTLY=====")
+	prod_obj = Product('product.xml')
+	cli_obj = Client('client.xml')
+	# Test Cases just remove the comments.
 	# cli_obj.create('test')
 	# cli_obj.remove('test')
 	# prod_obj.create('test')
