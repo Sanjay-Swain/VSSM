@@ -25,7 +25,7 @@ class Client:
 	def __init__(self, file):
 		self.file = file  # File name of the client xml.
 		try:
-			self.document = minidom.parse(file)  # minidom document object of client xml file.
+			self.document = minidom.parse(file)  # Document object of client xml file.
 		except xml.parsers.expat.ExpatError:  # Exception handling in case the file is empty
 			create_root(file, self.root)
 			self.document = minidom.parse(file)
@@ -64,7 +64,7 @@ class Client:
 		f.close()
 
 	def __str__(self):  # This will print the current status of the file in console.
-		xml_str = formatter.format_string(self.document.toxml(encoding="UTF-8")).decode()
+		xml_str = formatter.format_string(self.document.toxml(encoding="UTF-8")[38:]).decode()
 		return xml_str
 
 
@@ -72,8 +72,6 @@ class Product(Client):
 	root = 'product'
 
 
-prod_obj = Product('util\\product.xml')
-cli_obj = Client('util\\client.xml')
 formatter = xmlformatter.Formatter()
 
 if __name__ == '__main__':

@@ -1,11 +1,10 @@
-from util.XML_handler import *
 import commands
 
-
-print("Welcome to VSSM v0.01")  # Removed some zeros : )
+print("Welcome to VSSM v0.01")
 print("type help to see available commands")
 print("Current version of program doesn't have much features to use.")
 print("For now this program maybe helpful for storing names of products|client.")
+print()
 
 running = True
 

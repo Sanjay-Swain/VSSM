@@ -1,26 +1,29 @@
 from util.XML_handler import *
 
+help_str = """
+NOTE: The commands are not case sensitive
+NOTE: For commands save, help and exit the trailing data will be ignored.
+NOTE: And for create and remove commands the trailing data will be considered as a part of name.
+Commands:
+	create <client|product> <Name>
+	remove <client|product> <Name>
+	save
+	preview <client|product>
+	help
+	exit
+	clear
+	"""
+prod_obj = Product('util\\product.xml')
+cli_obj = Client('util\\client.xml')
+
 
 def help():
-	print("""
-	NOTE: The commands are not case sensitive
-	NOTE: For commands save, help and exit the trailing data will be ignored.
-	NOTE: ANd for create and remove commands the trailing data will be considered as a part of name.
-	Commands:
-		create <client|product> <Name>
-		remove <client|product> <Name>
-		save
-		preview <client|product>
-		help
-		exit
-		clear
-	""")
+	print(help_str)
 
 
 def execute(func: list):
 	"""
 	:param func: This is a list containing [function, file, Name]
-	:return: depends upon the function.
 	"""
 	try:
 		func_len = len(func)
