@@ -26,50 +26,41 @@ features are implemented*
 ## Initial Features
 
 -   **Client list**
-    -   Clients names, and optional information.
-    -   basic info like current debt
-
--   **Client detailed info**
-    -   Client purchases History and info
-    -   on a purchase by purchase basis
-
-    -   debt info
-        -   specific products in debt
+    - [x] Clients names, and optional information.
+    - [ ] basic info like current debt
+    - [ ] Client purchases History and info
+    - [ ] debt info
+        - [ ] specific products in debt
 
 -   **Purchases interface**
-    -   Purchasing client selection
-        -   Easy client creation just by entering name or 
+    - [ ] Purchasing client selection
+        - [ ] Easy client creation just by entering name or 
             some basic data
-        -   Client search
-        -   Anonymous client option
-    -   Product to sell
-        1.   Multiple product selection
-        2.   Selectable quantity
-        3.   Optional custom price
-    - Modifiable purchase metadata (ie date)
+        - [ ] Client search
+        - [ ] Anonymous client option
+    - [ ] Product to sell
+        1. [ ] Multiple product selection
+        2. [ ] Selectable quantity
+        3. [ ] Optional custom price
+    - [ ] Modifiable purchase metadata (ie date)
     
 - **Inventory**
-    - Product adding
-        - Name, price and optional description/metadata
-    -   Product managing
+    - [x] Product adding
+        - [x] Name, price and optional description/metadata
+    - [x] Product managing (It depends on what you call managing)
     
-     -   Price & stock properties
-         -   Optional metadata (ie expiration date)
-             -   Independent batch metadata
+    - [ ] Price & stock properties
+        - [ ] Optional metadata (ie expiration date)
+            - [ ] Independent batch metadata
     
-         -   Price and stock change 
-         -   Batch adding/discarding 
+        - [ ] Price and stock change 
+        - [ ] Batch adding/discarding 
 
 -   **Storage**
-    -   All data will be stored on a .VSSM file (referred as the 
-        archive)
-        -   any configuration
-        -   Each entry will be an inventory product, client 
-            or configuration file, stored inside the archive
-    -   Optional encryption (no guarantees)
-    -   (optional) extra parity checks to ensure data 
+    - [ ] Optional encryption (no guarantees)
+    - [ ] (optional) extra parity checks to ensure data 
         integrity
-    -   all data will be saved in xml format, trying to 
+    - [x]  all data will be saved in xml format, trying to 
         keep things simple
 
 ## Other information
