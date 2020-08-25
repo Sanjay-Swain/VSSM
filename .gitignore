@@ -128,3 +128,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Data storage
+src/util/client.xml
+src/util/product.xml

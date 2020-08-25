@@ -24,9 +24,9 @@ class Client:
 
 	def __init__(self, file):
 		self.file = file  # File name of the client xml.
-		try:
+		try:        # Exception handling in case the file doesn't exist or empty.
 			self.document = minidom.parse(file)  # Document object of client xml file.
-		except xml.parsers.expat.ExpatError:  # Exception handling in case the file is empty
+		except FileNotFoundError or xml.parsers.expat.ExpatError:
 			create_root(file, self.root)
 			self.document = minidom.parse(file)
 
