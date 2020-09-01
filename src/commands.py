@@ -4,10 +4,11 @@ help_str = """NOTE: The commands are not case sensitive
 NOTE: For commands help and exit the trailing data will be ignored.
 NOTE: And for create and remove commands the trailing data will be considered as a part of name.
 Commands:
-    create <client|product> <Name>
-    remove <client|product> <Name>
+    create <client|product> <name>
+    remove <client|product> <name>
     save
     preview <client|product>
+    buy <client name> <product name> <quantity>
     help
     exit
     clear
@@ -32,16 +33,12 @@ clear_help_str = """clear:
     syntax: clear
 It will clear the screen by printing empty strings."""
 help_help_str = "Really now you are asking for this come on!!"
-
-prod_obj = Product('util\\product.xml')
-cli_obj = Client('util\\client.xml')
-conn = sqlite3.connect("util\\purchase.db")
-
-c = conn.cursor()
-c.execute("CREATE TABLE IF NOT EXISTS purchase_data (CID char(20), PID char(20), quantity int)")
+help_buy_str = """buy:
+    syntax: <client name> <product name> <quantity>
+Use buy command to purchase a product.
+"""
 
 
-# TODO: Create a help command for buy function.
 def help(command=None):
     if command is None:
         print(help_str)
@@ -51,6 +48,8 @@ def help(command=None):
         print(remove_help_str)
     elif command == "save":
         print(save_help_str)
+    elif command == "buy":
+        print(help_buy_str)
     elif command == "exit":
         print(exit_help_str)
     elif command == "preview":
@@ -99,6 +98,13 @@ def execute(func: list):
     except KeyError:
         print(f"Please chose between [client|product] {func[1]} is not valid.")
 
+
+prod_obj = Product('util\\product.xml')
+cli_obj = Client('util\\client.xml')
+conn = sqlite3.connect("util\\purchase.db")
+
+c = conn.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS purchase_data (CID char(20), PID char(20), quantity int)")
 
 command_list = ["help", "create", "remove", "save", "preview", "exit", "clear", "buy"]
 file_dict = {"client": cli_obj, "product": prod_obj}
