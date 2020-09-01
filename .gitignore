@@ -132,3 +132,4 @@ dmypy.json
 # Data storage
 src/util/client.xml
 src/util/product.xml
+src/util/purchase.db
