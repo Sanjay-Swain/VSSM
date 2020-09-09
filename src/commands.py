@@ -9,6 +9,7 @@ Commands:
     save
     preview <client|product>
     buy <client name> <product name> <quantity>
+    history
     help
     exit
     clear
@@ -37,6 +38,11 @@ help_buy_str = """buy:
     syntax: <client name> <product name> <quantity>
 Use buy command to purchase a product.
 """
+history_help_str = """history:
+    history
+This command will list all the transactions in a tuple containing client ID, product ID, quantity.
+NOTE: This is not completely impemented yet.
+"""
 
 
 def help(command=None):
@@ -56,6 +62,8 @@ def help(command=None):
         print(preview_help_str)
     elif command == "clear":
         print(clear_help_str)
+    elif command == "history":
+        print(history_help_str)
     elif command == "help":
         print(help_help_str)
     else:
@@ -85,7 +93,9 @@ def execute(func: list):
             elif func[0] == "preview":
                 print(file_dict[func[1]])
             elif func[0] == "buy":
-                buy(c, cli_obj.search_id(func[1]), prod_obj.search_id(func[2]), func[3])
+                buy(c, func[1], func[2], func[3])
+            elif func[0] == "history":
+                purchase_data(c)
             elif func[0] == "help":
                 try:
                     help(func[1])
@@ -99,12 +109,8 @@ def execute(func: list):
         print(f"Please chose between [client|product] {func[1]} is not valid.")
 
 
-prod_obj = Product('util\\product.xml')
-cli_obj = Client('util\\client.xml')
-conn = sqlite3.connect("util\\purchase.db")
-
 c = conn.cursor()
 c.execute("CREATE TABLE IF NOT EXISTS purchase_data (CID char(20), PID char(20), quantity int)")
 
-command_list = ["help", "create", "remove", "save", "preview", "exit", "clear", "buy"]
+command_list = ["help", "create", "remove", "save", "preview", "exit", "clear", "buy", "history"]
 file_dict = {"client": cli_obj, "product": prod_obj}

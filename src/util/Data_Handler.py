@@ -65,9 +65,9 @@ class Product(Client):
 
 
 def buy(cursor, client, product, quantity):
-    client_id = cli_obj.search_id(client)[0]
-    product_id = prod_obj.search_id(product)[0]
-    if prod_obj.search_id(product)[1]:
+    if prod_obj.search_id(product)[1] and cli_obj.search_id(client)[1]:
+        client_id = cli_obj.search_id(client)[0]
+        product_id = prod_obj.search_id(product)[0]
         cursor.execute(f"INSERT INTO purchase_data values('{client_id}', '{product_id}', '{quantity}')")
         conn.commit()
     else:
@@ -87,15 +87,19 @@ if __name__ == '__main__':
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS purchase_data (CID char(20), PID char(20), quantity int)")
     # Test Cases just remove the comments.
-    cli_obj.create('test')
-    cli_obj.remove('test')
-    prod_obj.create('test')
-    prod_obj.remove('test')
-    print(cli_obj)
-    print(prod_obj)
-    buy(c, 'test', 'test', 2)
-    purchase_data(c)
-    cli_obj.save()
-    prod_obj.save()
-    conn.commit()
-    conn.close()
+    # cli_obj.create('test')
+    # cli_obj.remove('test')
+    # prod_obj.create('test')
+    # prod_obj.remove('test')
+    # print(cli_obj)
+    # print(prod_obj)
+    # buy(c, 'test', 'test', 2)
+    # purchase_data(c)
+    # cli_obj.save()
+    # prod_obj.save()
+    # conn.commit()
+    # conn.close()
+else:
+    prod_obj = Product('util\\product.xml')
+    cli_obj = Client('util\\client.xml')
+    conn = sqlite3.connect("util\\purchase.db")
